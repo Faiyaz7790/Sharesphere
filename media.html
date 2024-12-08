@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Sharing Platform</title>
+  <style>
+    /* Add combined styles here */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #f7f9fc, #eaf0f6);
+      color: #333;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #f5f5f58e;
+      border-bottom: 2px solid #11fc67;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    header nav a {
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 1.5rem;
+      color: #fc6711;
+      transition: transform 0.2s;
+    }
+    header nav a:hover {
+      transform: scale(1.2);
+    }
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .new-post, .media-feed {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    form input, form button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    .media-post {
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 15px;
+    }
+    .interaction-buttons button {
+      margin: 5px;
+      padding: 8px 15px;
+      background-color: #fc6711;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .interaction-buttons button:hover {
+      background-color: #e45d10;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <h1>Media Sharing Platform</h1>
+    </div>
+    <div class="header-right">
+      <nav>
+        <a href="#upload-section">Upload</a>
+        <a href="#feed-section">Media Feed</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Upload Section -->
+    <section id="upload-section" class="new-post">
+      <h2>New Post</h2>
+      <form id="postForm">
+        <label for="caption">Caption</label>
+        <input type="text" id="caption" placeholder="Enter your caption" required>
+        <label for="hashtags">Hash Tags</label>
+        <input type="text" id="hashtags" placeholder="#Hashtag1 #Hashtag2">
+        <label for="media">Add Media (Image/Video/Audio)</label>
+        <input type="file" id="media" accept="image/*,video/*,audio/*" required>
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+
+    <!-- Media Feed Section -->
+    <section id="feed-section" class="media-feed">
+      <h2>Media Feed</h2>
+      <div id="feed-container"></div>
+    </section>
+  </main>
+
+  <script>
+    // Upload and Display Media
+    const postForm = document.getElementById("postForm");
+    const feedContainer = document.getElementById("feed-container");
+
+    // Fetch and Render Media Feed
+    async function loadFeed() {
+      try {
+        const response = await fetch("/media?limit=10");
+        const mediaList = await response.json();
+        feedContainer.innerHTML = "";
+        mediaList.forEach(post => {
+          const postDiv = document.createElement("div");
+          postDiv.className = "media-post";
+          postDiv.innerHTML = `
+            <div class="post-header">
+              <p class="username">User</p>
+              <p class="post-time">${new Date(post.upload_date).toLocaleString()}</p>
+            </div>
+            <div class="media-content">
+              ${
+                post.url.endsWith(".mp4")
+                  ? `<video controls><source src="${post.url}" type="video/mp4"></video>`
+                  : post.url.endsWith(".jpg") || post.url.endsWith(".png")
+                  ? `<img src="${post.url}" alt="Media">`
+                  : ""
+              }
+            </div>
+            <div class="post-footer">
+              <p class="caption">${post.caption || ""}</p>
+              <p class="hashtags">${post.hashtags || ""}</p>
+              <div class="interaction-buttons">
+                <button>👍 Like</button>
+                <button>💬 Comment</button>
+              </div>
+            </div>
+          `;
+          feedContainer.appendChild(postDiv);
+        });
+      } catch (error) {
+        console.error("Failed to load media feed:", error);
+      }
+    }
+
+    // Handle New Post Submission
+    postForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(postForm);
+      try {
+        const response = await fetch("/upload", { method: "POST", body: formData });
+        if (response.ok) {
+          alert("Post uploaded successfully!");
+          postForm.reset();
+          loadFeed();
+        } else {
+          const error = await response.json();
+          alert("Error uploading post: " + error.message);
+        }
+      } catch (error) {
+        console.error("Upload failed:", error);
+        alert("An unexpected error occurred.");
+      }
+    });
+
+    // Initial Load
+    loadFeed();
+  </script>
+</body>
+</html>

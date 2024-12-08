@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShareSphere - Your Media Sharing Hub</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #f7f9fc, #eaf0f6);
+      color: #333;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #f5f5f58e;
+      border-bottom: 2px solid #11fc67;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .header-left h1 {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+    .header-center .search-bar {
+      width: 100%;
+      max-width: 300px;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .header-right nav a {
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 1.5rem;
+      color: #fc6711;
+      transition: transform 0.2s;
+    }
+    .header-right nav a:hover {
+      transform: scale(1.2);
+    }
+
+    /* Main Content */
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .new-post, .preview-post {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .new-post h2, .preview-post h2 {
+      margin-top: 0;
+      color: #333;
+      border-bottom: 2px solid #19fc1179;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+    form label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+    form input, form button {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    .button-container button {
+      width: 48%;
+      display: inline-block;
+      margin-right: 4%;
+      background-color: #fc6711;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    .button-container button:last-child {
+      margin-right: 0;
+      background-color: #888;
+    }
+    .button-container button:hover {
+      opacity: 0.9;
+    }
+
+    /* Preview Section */
+    .preview-post .preview-container {
+      text-align: center;
+    }
+    .media-placeholder {
+      height: 200px;
+      background: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 15px;
+      border: 2px dashed #fc6711;
+      border-radius: 8px;
+    }
+    .interaction-buttons {
+      display: flex;
+      justify-content: center;
+    }
+    .interaction-buttons button {
+      margin: 0 10px;
+      padding: 8px 15px;
+      background-color: #fc6711;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .interaction-buttons button:hover {
+      background-color: #e45d10;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .header-center .search-bar {
+        max-width: 100%;
+        margin: 10px 0;
+      }
+      .header-right nav a {
+        font-size: 1.2rem;
+        margin: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header with Logo, Search Bar, and Icons -->
+  <header>
+    <div class="header-left">
+      <h1>Share<span style="color: #fc6711;">Sphere</span></h1>
+    </div>
+    <div class="header-center">
+      <input type="text" id="search" placeholder="Search..." class="search-bar">
+    </div>
+    <div class="header-right">
+      <nav>
+        <a href="index.html" title="Home">🏡</a>
+        <a href="mediagallery.html" title="Gallery">🖼️</a>
+        <a href="media.html" title="Favorites">🌟</a>
+        <a href="profile.html" title="Profile">🧑‍💻</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- New Post Form -->
+    <section class="new-post">
+      <h2>New Post</h2>
+      <form id="postForm">
+        <label for="caption">What's on Your Mind</label>
+        <input type="text" id="caption" placeholder="Enter your caption" required>
+        
+        <label for="hashtags">Hash Tags</label>
+        <input type="text" id="hashtags" placeholder="#Hashtag1 #Hashtag2">
+        
+        <label for="media">Add Media (Image, Video, Audio)</label>
+        <input type="file" id="media" accept="image/*,video/*,audio/*" required>
+
+        <div class="button-container">
+          <button type="submit">Submit</button>
+          <button type="button" id="clearPreview">Clear Preview</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Preview Post Section -->
+    <section class="preview-post">
+      <h2 style="color: #fc6711;">Preview Post</h2>
+      <div id="previewContainer" class="preview-container">
+        <div class="preview-content">
+          <p class="preview-username">PREVIEW POST</p>
+        </div>
+        <div id="mediaPreview" class="media-placeholder">No media selected</div>
+        <p id="captionPreview" class="caption-preview">Caption: </p>
+        <p id="hashtagsPreview" class="hashtags-preview"></p>
+        
+        <!-- Like and Comment Buttons -->
+        <div class="interaction-buttons">
+          <button type="button" class="like-button">👍 Like</button>
+          <button type="button" class="comment-button">💬 Comment</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Dynamic Media Preview
+    document.getElementById("media").addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      const mediaPreview = document.getElementById("mediaPreview");
+      if (file) {
+        const url = URL.createObjectURL(file);
+        mediaPreview.innerHTML = file.type.startsWith("image/")
+          ? `<img src="${url}" alt="Preview" style="max-width: 100%; max-height: 200px;">`
+          : `<video src="${url}" controls style="max-width: 100%; max-height: 200px;"></video>`;
+      } else {
+        mediaPreview.textContent = "No media selected";
+      }
+    });
+
+    // Form Submission
+    document.getElementById("postForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append("file", document.getElementById("media").files[0]);
+      formData.append("caption", document.getElementById("caption").value);
+      formData.append("hashtags", document.getElementById("hashtags").value);
+
+      try {
+        const response = await fetch("/upload", {
+          method: "POST",
+          body: formData,
+        });
+        const result = await response.json();
+        if (response.ok) {
+          alert("Upload successful! URL: " + result.url);
+        } else {
+          alert("Error: " + result.error);
+        }
+      } catch (error) {
+        console.error("Upload failed:", error);
+        alert("An unexpected error occurred.");
+      }
+    });
+
+    // Clear Preview
+    document.getElementById("clearPreview").addEventListener("click", () => {
+      document.getElementById("mediaPreview").innerHTML = "No media selected";
+      document.getElementById("captionPreview").textContent = "Caption: ";
+      document.getElementById("hashtagsPreview").textContent = "";
+    });
+  </script>
+</body>
+</html>

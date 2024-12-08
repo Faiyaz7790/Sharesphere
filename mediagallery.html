@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User's Media Gallery</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <h1>User's <span style="color: #fc6711;">Media Gallery</span></h1>
+    </div>
+    <div class="header-right">
+      <nav>
+        <a href="index.html"><i class="home-icon">🏠</i></a>
+        <a href="media.html"><i class="heart-icon">❤️</i></a>
+        <a href="profile.html"><i class="profile-icon">👤</i></a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Media Gallery Section -->
+    <section class="user-media-gallery">
+      <h2>All Media</h2>
+
+      <!-- Image Media -->
+      <div class="media-item">
+        <h3>Images</h3>
+        <img src="image1.jpg" alt="Image 1" class="media-img">
+        <img src="image2.jpg" alt="Image 2" class="media-img">
+        <!-- Add more images as needed -->
+      </div>
+
+      <!-- Video Media -->
+      <div class="media-item">
+        <h3>Videos</h3>
+        <video controls class="media-video">
+          <source src="video1.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <video controls class="media-video">
+          <source src="video2.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <!-- Add more videos as needed -->
+      </div>
+
+      <!-- Audio Media -->
+      <div class="media-item">
+        <h3>Audio</h3>
+        <audio controls class="media-audio">
+          <source src="audio1.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+        <audio controls class="media-audio">
+          <source src="audio2.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+        <!-- Add more audio files as needed -->
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

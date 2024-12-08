@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Sharing Platform</title>
+    <style>
+        /* Shared styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #f7f9fc, #eaf0f6);
+            color: #333;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: linear-gradient(to right, #fc6711, #ffa833);
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        header nav a {
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            color: white;
+            transition: transform 0.2s;
+        }
+        header nav a:hover {
+            transform: scale(1.2);
+        }
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .section {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .profile-page {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .profile-sidebar {
+            flex: 1;
+            max-width: 300px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+        .profile-sidebar img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        .profile-sidebar h2 {
+            font-size: 1.5rem;
+            margin: 10px 0;
+            color: #fc6711;
+        }
+        .profile-details form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        form input, form textarea, form button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        form button {
+            background: #fc6711;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        form button:hover {
+            background: #e45d10;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div>
+            <h1>Media Sharing Platform</h1>
+        </div>
+        <nav>
+            <a href="#upload-section">Upload</a>
+            <a href="#feed-section">Feed</a>
+            <a href="#gallery-section">Gallery</a>
+            <a href="#profile-section">Profile</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Upload Section -->
+        <section id="upload-section" class="section">
+            <h2>Upload Media</h2>
+            <form id="uploadForm">
+                <label for="caption">Caption</label>
+                <input type="text" id="caption" placeholder="Enter caption" required>
+                <label for="hashtags">Hashtags</label>
+                <input type="text" id="hashtags" placeholder="#hashtag1 #hashtag2">
+                <label for="media">Choose Media</label>
+                <input type="file" id="media" accept="image/*,video/*,audio/*" required>
+                <button type="submit">Upload</button>
+            </form>
+        </section>
+
+        <!-- Media Feed Section -->
+        <section id="feed-section" class="section">
+            <h2>Media Feed</h2>
+            <div id="feed-container"></div>
+        </section>
+
+        <!-- Media Gallery Section -->
+        <section id="gallery-section" class="section">
+            <h2>Media Gallery</h2>
+            <div id="gallery-container">
+                <h3>Images</h3>
+                <div id="gallery-images"></div>
+                <h3>Videos</h3>
+                <div id="gallery-videos"></div>
+                <h3>Audio</h3>
+                <div id="gallery-audio"></div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile-section" class="profile-page">
+            <aside class="profile-sidebar">
+                <img src="profile-icon.png" alt="Profile Picture">
+                <h2>@username</h2>
+                <p>Full Name</p>
+                <h3>Bio</h3>
+                <p>A brief bio about the user.</p>
+            </aside>
+
+            <div class="profile-details">
+                <form id="profileForm">
+                    <fieldset>
+                        <legend>Personal Details</legend>
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" placeholder="Your Full Name">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" placeholder="Your Username">
+                        <label for="profilePicture">Change Profile Picture</label>
+                        <input type="file" id="profilePicture" accept="image/*">
+                    </fieldset>
+                    <fieldset>
+                        <legend>Account Security</legend>
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" placeholder="New Password">
+                        <label for="retypePassword">Retype New Password</label>
+                        <input type="password" id="retypePassword" placeholder="Retype New Password">
+                    </fieldset>
+                    <button type="submit">Update Profile</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // JavaScript code for loading media feed, gallery, and handling profile updates
+
+        // Profile Update Form
+        document.getElementById("profileForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            alert("Profile updated successfully!");
+        });
+
+        // Load functions for feed and gallery as per previous implementation
+    </script>
+</body>
+</html>

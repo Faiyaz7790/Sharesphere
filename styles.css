@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Sharing Platform</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to External CSS -->
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-left">
+            <h1>Media Sharing Platform</h1>
+        </div>
+        <div class="header-center">
+            <input type="text" class="search-bar" placeholder="Search...">
+        </div>
+        <div class="header-right">
+            <nav>
+                <a href="#upload-section">Upload</a>
+                <a href="#feed-section">Feed</a>
+                <a href="#gallery-section">Gallery</a>
+                <a href="#profile-section">Profile</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Upload Section -->
+        <section id="upload-section" class="new-post">
+            <h2>Upload Media</h2>
+            <form id="postForm">
+                <label for="caption">Caption</label>
+                <input type="text" id="caption" placeholder="Enter caption" required>
+                <label for="hashtags">Hashtags</label>
+                <input type="text" id="hashtags" placeholder="#hashtag1 #hashtag2">
+                <label for="media">Choose Media</label>
+                <input type="file" id="media" accept="image/*,video/*,audio/*" required>
+                <div class="button-container">
+                    <button type="submit">Preview</button>
+                    <button type="button" id="clearPreview">Clear</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Preview Section -->
+        <section id="preview-section" class="preview-post">
+            <h2>Preview Media</h2>
+            <div id="mediaPreview" class="preview-container">No media selected</div>
+            <p id="captionPreview" class="caption-preview">Caption: </p>
+            <p id="hashtagsPreview" class="hashtags-preview">Tags: </p>
+        </section>
+
+        <!-- Media Feed Section -->
+        <section id="feed-section" class="new-post">
+            <h2>Media Feed</h2>
+            <div id="feed-container" class="preview-container"></div>
+        </section>
+
+        <!-- Media Gallery Section -->
+        <section id="gallery-section" class="preview-post">
+            <h2>Media Gallery</h2>
+            <div id="gallery-container">
+                <h3>Images</h3>
+                <div id="gallery-images"></div>
+                <h3>Videos</h3>
+                <div id="gallery-videos"></div>
+                <h3>Audio</h3>
+                <div id="gallery-audio"></div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile-section" class="new-post">
+            <h2>User Profile</h2>
+            <form id="profileForm">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" placeholder="Your Full Name">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Your Username">
+                <label for="profilePicture">Change Profile Picture</label>
+                <input type="file" id="profilePicture" accept="image/*">
+                <label for="newPassword">New Password</label>
+                <input type="password" id="newPassword" placeholder="New Password">
+                <label for="retypePassword">Retype New Password</label>
+                <input type="password" id="retypePassword" placeholder="Retype New Password">
+                <button type="submit">Update Profile</button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // JavaScript for handling file uploads and displaying previews
+        const postForm = document.getElementById("postForm");
+        const captionInput = document.getElementById("caption");
+        const hashtagsInput = document.getElementById("hashtags");
+        const mediaInput = document.getElementById("media");
+        const mediaPreview = document.getElementById("mediaPreview");
+        const captionPreview = document.getElementById("captionPreview");
+        const hashtagsPreview = document.getElementById("hashtagsPreview");
+        const clearPreview = document.getElementById("clearPreview");
+
+        postForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            // Display caption and hashtags
+            captionPreview.textContent = "Caption: " + captionInput.value;
+            hashtagsPreview.textContent = "Tags: " + hashtagsInput.value;
+
+            // Display media preview
+            const file = mediaInput.files[0];
+            if (file) {
+                const fileURL = URL.createObjectURL(file);
+
+                // Check the file type to display correctly
+                if (file.type.startsWith("image/")) {
+                    mediaPreview.innerHTML = `<img src="${fileURL}" alt="Image Preview" class="media-placeholder">`;
+                } else if (file.type.startsWith("video/")) {
+                    mediaPreview.innerHTML = `<video src="${fileURL}" controls class="media-placeholder"></video>`;
+                } else if (file.type.startsWith("audio/")) {
+                    mediaPreview.innerHTML = `<audio src="${fileURL}" controls class="media-placeholder"></audio>`;
+                }
+            }
+        });
+
+        // Clear the preview on button click
+        clearPreview.addEventListener("click", () => {
+            captionPreview.textContent = "Caption: ";
+            hashtagsPreview.textContent = "Tags: ";
+            mediaPreview.innerHTML = "No media selected";
+            postForm.reset();
+        });
+
+        // Profile Update
+        document.getElementById("profileForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            alert("Profile updated successfully!");
+        });
+    </script>
+</body>
+</html>
